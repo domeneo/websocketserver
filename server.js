@@ -78,7 +78,7 @@ function createWebSocketServer({ port, cert, key }) {
       console.log(`Client disconnected on port ${port}: ${clientid}`);
       //clients.delete(clientid); // Remove the client from the map
 
-      clients = clients.filter(client => client.clientid != clientid);
+      clients = clients.filter(client =>  client.ws.readyState === WebSocket.OPEN);
 
     });
   });
@@ -146,7 +146,8 @@ function createHttpWebSocketServer(port) {
     ws.on('close', () => {
       console.log(`Client disconnected on HTTP port ${port}: ${clientid}`);
      // clients.delete(clientid); // Remove the client from the map
-     clients = clients.filter(client => client.clientid != clientid);
+     //clients = clients.filter(client => client.clientid != clientid);
+     clients = clients.filter(client =>  client.ws.readyState === WebSocket.OPEN);
     });
   });
 
